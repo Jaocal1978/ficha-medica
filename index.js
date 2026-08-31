@@ -6,15 +6,26 @@ const guardar = () =>
     let Rut = rut.value;
     let existe = registros.find(r => r.rut === Rut);
 
-    if(Rut == '' || nombres.value == '' || apellidos.value == '' || telefono.value == '' || email.value == '')
+    if(Rut == '' || nombres.value == '' || apellidos.value == '' || telefono.value == '' || email.value == '' || direccion.value == '' || ciudad.value == '' || fechaNacimiento.value == '' || estadoCivil.value == '' || comentarios.value == '')
     {
         Swal.fire(
         {
             icon: 'error',
             title: 'Campos obligatorios',
-            text: 'Debes completar RUT, Nombres, Apellidos, Email y Telefono.'
+            text: 'Debes completar RUT, Nombres, Apellidos, Email, Telefono, Fecha nacimiento, Estado Civil, Comentarios, Dirección y Ciudad.'
         });
 
+        return;
+    }
+
+    if(comentarios.value.length > 200) 
+    {
+        Swal.fire(
+        {
+            icon: 'error',
+            title: 'Comentarios demasiado largos',
+            text: 'El campo comentarios no puede superar los 200 caracteres.'
+        });
         return;
     }
 
@@ -149,17 +160,17 @@ const limpiarFormulario = () =>
         showCancelButton: true,
         confirmButtonText: 'Sí, limpiar',
         cancelButtonText: 'No'
-    }).then((result) => 
-    {
+    }).then((result) => {
         if (result.isConfirmed) 
         {
-        document.getElementById("fichaMedica").reset();
-        Swal.fire(
-        {
-            icon: 'success',
-            title: 'Formulario limpio',
-            text: 'Todos los campos han sido borrados.'
-        });
+            document.getElementById("fichaMedica").reset();
+
+            Swal.fire(
+            {
+                icon: 'success',
+                title: 'Formulario limpio',
+                text: 'Todos los campos han sido borrados.'
+            });
         }
     });
 }
