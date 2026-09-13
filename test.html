@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pruebas automáticas Ficha Médica</title>
+</head>
+
+<body>
+    <h2>Resultados de pruebas automáticas</h2>
+    <pre id="resultados"></pre>
+
+    <script>
+        // Funciones de mi aplicación
+        const validarEmail = (email) => 
+        {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email.trim());
+        };
+
+        const validarFecha = (fechaIngresada) => 
+        {
+            const fecha = new Date(fechaIngresada);
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            return fecha <= hoy;
+        };
+
+        //Función para mostrar resultados en pantalla
+        const mostrar = (descripcion, resultado) => 
+        {
+            document.getElementById("resultados").textContent += `${descripcion}: ${resultado}\n`;
+        };
+
+        //Casos de prueba automáticos
+        mostrar("Email válido", validarEmail("usuario@dominio.com")); // true
+        mostrar("Email inválido", validarEmail("usuario@@dominio")); // false
+
+        const hoy = new Date().toISOString().split("T")[0];
+        mostrar("Fecha válida (hoy)", validarFecha(hoy)); // true
+
+        const futura = new Date();
+        futura.setDate(futura.getDate() + 1);
+        mostrar("Fecha inválida (mañana)", validarFecha(futura.toISOString().split("T")[0])); // false
+
+        console.log("Pruebas automáticas completadas. Revisa la sección de resultados en la página.");
+        console.log("Email válido", validarEmail("usuario@dominio.com")); // true
+        console.log("Email inválido", validarEmail("usuario@@dominio")); // false
+        console.log("Fecha válida (hoy)", validarFecha(hoy)); // true
+        console.log("Fecha inválida (mañana)", validarFecha(futura.toISOString().split("T")[0])); // false
+    </script>
+</body>
+
+</html>
