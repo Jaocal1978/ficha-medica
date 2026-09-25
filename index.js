@@ -29,6 +29,19 @@ const guardar = () =>
         return;
     }
 
+    //Validar el formato rut
+    if(!validarRut(Rut))
+    {
+        Swal.fire(
+        {
+            icon: "error",
+            title: "Rut inválido",
+            text: "Por favor ingresa un rut válido (ejemplo: 1234567-8 o 12345678-9)."
+        });
+
+        return;
+    }
+
     //Validar el formato de email
     if(!validarEmail(email.value)) 
     {
@@ -214,11 +227,19 @@ const validarEmail = (email) => {
 };
 
 //Debemos validar fecha de cumpleaños que no sea mayor a fecha actual
-const validarFecha = (fechaIngresada) => {
-  const fecha = new Date(fechaIngresada);
-  const fechaActual = new Date();
-  fechaActual.setHours(0, 0, 0, 0); //Normalizamos la fecha actual sin hora
-  return fecha <= fechaActual;
+const validarFecha = (fechaIngresada) => 
+{
+    const fecha = new Date(fechaIngresada);
+    const fechaActual = new Date();
+    fechaActual.setHours(0, 0, 0, 0); //Normalizamos la fecha actual sin hora
+    return fecha <= fechaActual;
 };
 
-//Debemos validar campo de telefono y dar formato al numero telefonico
+//validar Rut 00000000-0
+const validarRut = (rut) => 
+{
+    // Expresión regular: 8 dígitos + guion + dígito o K
+    const regex = /^[0-9]{7,8}-[0-9Kk]{1}$/;
+
+    return regex.test(rut);
+}
